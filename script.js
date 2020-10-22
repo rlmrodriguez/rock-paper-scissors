@@ -2,11 +2,9 @@
 
 // Ask for the player's move
 function playerMove() {
-
   let isValidMove = true;
 
   // Force the user to input a valid move
-
   while (isValidMove) {
     // Should either be 'rock', 'paper' or 'scissors'
     let move = prompt('Choose a move: Rock, Paper, Scissors');
@@ -25,7 +23,6 @@ function playerMove() {
       } else {
         alert('Enter a valid move!')
       }
-
     }
   }
 }
@@ -39,10 +36,6 @@ function computerMove() {
 }
 
 function playRound(playerSelection, computerSelection) {
-  // If the moves are the same, DRAW
-  // rocks(W) > scissors
-  // scissors(W) > paper
-  // paper(W) > scissors
   if ((playerSelection === 'rock') && (computerSelection === 'scissors')) {
     console.log('You win! Rock beats scissors!');
     playerScore++;
@@ -67,7 +60,6 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
-
   for (let counter = 1; counter <= 5; counter++) {
     // Store that move to a variable playerSelection
     let playerSelection = playerMove();
@@ -79,21 +71,13 @@ function game() {
     // Make the computer 'play', store this move to computerSelection
     let computerSelection = computerMove();
 
-
     // Play one round--
     playRound(playerSelection, computerSelection);
-
-
-
-
   }
   getWinner(playerScore, computerScore);
-
-  // Run until player chooses not to play again
   newGame();
 
 }
-
 
 function getWinner(playerScore, computerScore) {
   if (playerScore > computerScore) {
@@ -101,7 +85,7 @@ function getWinner(playerScore, computerScore) {
   } else if (computerScore > playerScore) {
     alert('You lost to the computer! Better luck next time!');
   } else {
-    alert(`It's a DRAW!`)
+    alert(`It's a DRAW!`);
   }
 }
 
@@ -118,11 +102,9 @@ function newGame() {
   }
 }
 
-
 // Initialize scores
-let playerScore = 1;
-let computerScore = 1;
+let playerScore = 0;
+let computerScore = 0;
 
-// Run the game
 game();
 
