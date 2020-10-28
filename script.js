@@ -1,110 +1,126 @@
-//PSEUDO-CODE
+const game = () => {
+  let playerScore = 0;
+  let computerScore = 0;
+  const winner = document.querySelector('.winner p');
+  // Play round
+  const playRound = () => {
+    const moves = document.querySelectorAll('.moves button');
+    // Computer moves
+    // Use an array of moves
+    const computerMoves = ['rock', 'paper', 'scissors'];
+    moves.forEach(move => {
+      move.addEventListener('click', function () {
+        // Computer choice
+        const computerNum = Math.floor(Math.random() * 3);
+        const computerSelection = computerMoves[computerNum];
 
-// Ask for the player's move
-function playerMove() {
-  let isValidMove = true;
+        // Call getWinner here
+        getWinner(this.id, computerSelection);
+        declareWinner();
 
-  // Force the user to input a valid move
-  while (isValidMove) {
-    // Should either be 'rock', 'paper' or 'scissors'
-    let move = prompt('Choose a move: Rock, Paper, Scissors');
 
-    // Terminate early if player clicks on Cancel button
-    if (move === null) {
-      return; // Returns undefined, not NULL
-    }
 
-    if (move) {
-      // Assumed that the user strictly inputs alphabetical text
-      // Revise code in case of non-alphabetical input
-      move = move.toLowerCase();
-      if (move === 'rock' || move === 'paper' || move === 'scissors') {
-        return move;
-      } else {
-        alert('Enter a valid move!')
-      }
-    }
+      })
+    })
   }
-}
 
-// Pick a random 'move' for the computer
-function computerMove() {
-  const moves = ['rock', 'scissors', 'paper'];
-
-  let moveNum = Math.floor(Math.random() * 3);
-  return moves[moveNum];
-}
-
-function playRound(playerSelection, computerSelection) {
-  if ((playerSelection === 'rock') && (computerSelection === 'scissors')) {
-    console.log('You win! Rock beats scissors!');
-    playerScore++;
-  } else if ((playerSelection === 'scissors') && (computerSelection === 'paper')) {
-    console.log('You win! Scissors beat paper!');
-    playerScore++;
-  } else if ((playerSelection === 'paper') && (computerSelection === 'rock')) {
-    console.log('You win! Paper beat rock!');
-    playerScore++;
-  } else if ((computerSelection === 'rock') && (playerSelection === 'scissors')) {
-    console.log('You lost! Rock beats scissors!');
-    computerScore++;
-  } else if ((computerSelection === 'scissors') && (playerSelection === 'paper')) {
-    console.log('You lost! Scissors beat paper!');
-    computerScore++;
-  } else if ((computerSelection === 'paper') && (playerSelection === 'rock')) {
-    console.log('You lost! Paper beats rock!');
-    computerScore++;
-  } else {
-    console.log('DRAW!!!');
+  // Update score
+  const updateScore = () => {
+    const pScore = document.querySelector('.player-score p');
+    const cScore = document.querySelector('.computer-score p');
+    pScore.textContent = playerScore;
+    cScore.textContent = computerScore;
   }
-}
 
-function game() {
-  for (let counter = 1; counter <= 5; counter++) {
-    // Store that move to a variable playerSelection
-    let playerSelection = playerMove();
-    if (playerSelection === undefined) {
-      alert('Have a great day!')
+
+  // Compare moves
+  const getWinner = (playerSelection, computerSelection) => {
+
+
+    //Check for a tie
+    if (playerSelection === computerSelection) {
+      winner.textContent = 'It is a tie!';
       return;
     }
 
-    // Make the computer 'play', store this move to computerSelection
-    let computerSelection = computerMove();
+    // Check for rock
+    if (playerSelection === 'rock') {
+      if (computerSelection === 'scissors') {
+        winner.textContent = 'Player wins!';
+        playerScore++;
+        updateScore();
+        return;
+      } else {
+        winner.textContent = 'Computer wins!';
+        computerScore++;
+        updateScore();
+        return;
+      }
+    }
 
-    // Play one round--
-    playRound(playerSelection, computerSelection);
+    // Check for paper
+    if (playerSelection === 'paper') {
+      if (computerSelection === 'scissors') {
+        winner.textContent = 'Computer wins!';
+        computerScore++;
+        updateScore();
+        return;
+      } else {
+        winner.textContent = 'Player wins!';
+        playerScore++;
+        updateScore();
+        return;
+      }
+    }
+
+    // Check for scissors
+    if (playerSelection === 'scissors') {
+      if (computerSelection === 'rock') {
+        winner.textContent = 'Computer wins!';
+        computerScore++;
+        updateScore();
+        return;
+      } else {
+        winner.textContent = 'Player wins!';
+        playerScore++;
+        updateScore();
+        return;
+      }
+    }
+
   }
-  getWinner(playerScore, computerScore);
-  newGame();
 
+  const declareWinner = () => {
+    const endOfGameWinner = document.querySelector('.winner-winner');
+    if (playerScore === 5) {
+      endOfGameWinner.textContent = 'PLAYER WINS THE GAME!';
+      playerScore = 0;
+      computerScore = 0;
+      updateScore();
+
+    }
+
+    if (computerScore === 5) {
+      endOfGameWinner.textContent = 'COMPUTER WINS THE GAME!';
+      playerScore = 0;
+      computerScore = 0;
+      updateScore();
+
+    }
+
+    setTimeout(function () {
+      endOfGameWinner.textContent = '';
+      winner.textContent = 'Waiting for player\'s move. . .';
+    }, 1000);
+
+  }
+
+  // Add option for NEW GAME here
+
+
+  // Call all inner functions(s)
+  playRound();
 }
 
-function getWinner(playerScore, computerScore) {
-  if (playerScore > computerScore) {
-    alert('You won! Great!');
-  } else if (computerScore > playerScore) {
-    alert('You lost to the computer! Better luck next time!');
-  } else {
-    alert(`It's a DRAW!`);
-  }
-}
-
-function newGame() {
-  let playAgain = confirm('Want to play again?');
-
-  // Run another round if true
-  if (playAgain) {
-    playerScore = 0;
-    computerScore = 0;
-    game();
-  } else {
-    alert('Thank you for playing!');
-  }
-}
-
-// Initialize scores
-let playerScore = 0;
-let computerScore = 0;
-
+// Run the game function
 game();
-

@@ -4,11 +4,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Rock, Paper & Scissors</title>
 </head>
 
 <body>
-  <script src="script.js"> </script>
+  <div class="moves">
+    <button id="rock" style='font-size: 2em;'>ROCK</button>
+    <button id="paper" style=' font-size: 2em;''>PAPER</button>
+    <button id="scissors" style=' font-size: 2em;'>SCISSORS</button>
+  </div>
+
+  <div class="winner">
+    <p>Waiting for player's move. . .</p>
+  </div>
+
+  <div class="scores">
+    <div class="player-score">
+      <h3>Player</h3>
+      <p>0</p>
+    </div>
+    <div class="computer-score">
+      <h3>Computer</h3>
+      <p>0</p>
+    </div>
+  </div>
+
+  <h2 class="winner-winner"></h2>
+
+
+
+
+
+  <script src='./script.js'></script>
 </body>
 
 </html>
